@@ -8,12 +8,25 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    lazy var helloLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Hello, World!"
+        label.textColor = .white
+        label.font = .systemFont(ofSize: 36, weight: .bold)
+        label.textAlignment = .center
+        return label
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        view.backgroundColor = .systemBlue
+        view.addSubview(helloLabel)
+        helloLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            helloLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            helloLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
     }
-
-
 }
 
