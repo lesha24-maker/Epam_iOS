@@ -40,6 +40,8 @@ final class Task4ViewController: UIViewController {
         firstLabel.textColor = .white
         firstLabel.font = .boldSystemFont(ofSize: 18)
         firstLabel.textAlignment = .center
+        firstLabel.numberOfLines = 1
+        firstLabel.lineBreakMode = .byTruncatingTail
         firstLabel.translatesAutoresizingMaskIntoConstraints = false
         
         let secondLabel = UILabel()
@@ -47,6 +49,8 @@ final class Task4ViewController: UIViewController {
         secondLabel.textColor = .white
         secondLabel.font = .boldSystemFont(ofSize: 18)
         secondLabel.textAlignment = .center
+        secondLabel.numberOfLines = 1
+        secondLabel.lineBreakMode = .byTruncatingTail
         secondLabel.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(firstView)
@@ -57,9 +61,13 @@ final class Task4ViewController: UIViewController {
         NSLayoutConstraint.activate([
             firstLabel.centerXAnchor.constraint(equalTo: firstView.centerXAnchor),
             firstLabel.centerYAnchor.constraint(equalTo: firstView.centerYAnchor),
+            firstLabel.leadingAnchor.constraint(greaterThanOrEqualTo: firstView.leadingAnchor, constant: 8),
+            firstLabel.trailingAnchor.constraint(lessThanOrEqualTo: firstView.trailingAnchor, constant: -8),
             
             secondLabel.centerXAnchor.constraint(equalTo: secondView.centerXAnchor),
-            secondLabel.centerYAnchor.constraint(equalTo: secondView.centerYAnchor)
+            secondLabel.centerYAnchor.constraint(equalTo: secondView.centerYAnchor),
+            secondLabel.leadingAnchor.constraint(greaterThanOrEqualTo: secondView.leadingAnchor, constant: 8),
+            secondLabel.trailingAnchor.constraint(lessThanOrEqualTo: secondView.trailingAnchor, constant: -8)
         ])
     }
     
@@ -95,20 +103,16 @@ final class Task4ViewController: UIViewController {
         
         if traitCollection.horizontalSizeClass == .compact && traitCollection.verticalSizeClass == .regular {
             NSLayoutConstraint.activate(verticalConstraints)
-            print("Switched to vertical layout (Compact-Regular)")
         } else if traitCollection.horizontalSizeClass == .compact && traitCollection.verticalSizeClass == .compact {
             NSLayoutConstraint.activate(horizontalConstraints)
-            print("Switched to horizontal layout (Compact-Compact)")
         } else {
             NSLayoutConstraint.activate(verticalConstraints)
-            print("Using vertical layout as fallback")
         }
     }
     
     private func registerForTraitChanges() {
         let sizeTraits: [UITrait] = [UITraitVerticalSizeClass.self, UITraitHorizontalSizeClass.self]
         registerForTraitChanges(sizeTraits) { (self: Self, previousTraitCollection: UITraitCollection) in
-            print("Trait collection changed from \(previousTraitCollection) to \(self.traitCollection)")
             self.updateLayoutForCurrentTraitCollection()
         }
     }
