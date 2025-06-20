@@ -12,24 +12,34 @@ class ConfirmDetailsViewController: UIViewController {
     private let name: String
     private let phone: String
     private let preference: String
-
-    private lazy var summaryStackView: UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .vertical
-        stack.spacing = 12
-        stack.alignment = .leading
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        return stack
-    }()
-
-    private lazy var buttonStackView: UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .vertical
-        stack.spacing = 15
-        stack.distribution = .fillEqually
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        return stack
-    }()
+    
+    private lazy var nameLabel: UILabel = createSummaryLabel(title: "Name", detail: name)
+    private lazy var phoneLabel: UILabel = createSummaryLabel(title: "Phone Number", detail: phone)
+    private lazy var preferenceLabel: UILabel = createSummaryLabel(title: "Notification Preference", detail: preference)
+    
+    private lazy var editPersonalInfoButton: UIButton = createNavButton(
+        title: "Edit personal info",
+        color: .systemOrange,
+        action: #selector(editPersonalInfoTapped)
+    )
+    
+    private lazy var editPreferencesButton: UIButton = createNavButton(
+        title: "Edit preferences",
+        color: .systemOrange,
+        action: #selector(editPreferencesTapped)
+    )
+    
+    private lazy var startOverButton: UIButton = createNavButton(
+        title: "Start over",
+        color: .systemRed,
+        action: #selector(startOverTapped)
+    )
+    
+    private lazy var confirmButton: UIButton = createNavButton(
+        title: "Confirm",
+        color: .systemGreen,
+        action: #selector(confirmTapped)
+    )
     
     init(name: String, phone: String, preference: String) {
         self.name = name
@@ -49,12 +59,13 @@ class ConfirmDetailsViewController: UIViewController {
         navigationItem.hidesBackButton = true
         setupUI()
     }
-    
+        
     private func createSummaryLabel(title: String, detail: String) -> UILabel {
         let label = UILabel()
         label.font = .systemFont(ofSize: 18)
         label.text = "\(title): \(detail)"
         label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }
 
@@ -65,38 +76,66 @@ class ConfirmDetailsViewController: UIViewController {
         button.tintColor = .white
         button.titleLabel?.font = .systemFont(ofSize: 18, weight: .bold)
         button.layer.cornerRadius = 8
+        button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: action, for: .touchUpInside)
         return button
     }
-
+    
     private func setupUI() {
-        // Setup Summary
-        summaryStackView.addArrangedSubview(createSummaryLabel(title: "Name", detail: name))
-        summaryStackView.addArrangedSubview(createSummaryLabel(title: "Phone Number", detail: phone))
-        summaryStackView.addArrangedSubview(createSummaryLabel(title: "Notification Preference", detail: preference))
+        view.addSubview(nameLabel)
+        view.addSubview(phoneLabel)
+        view.addSubview(preferenceLabel)
         
-        // Setup Buttons
-        buttonStackView.addArrangedSubview(createNavButton(title: "Edit personal info", color: .systemOrange, action: #selector(editPersonalInfoTapped)))
-        buttonStackView.addArrangedSubview(createNavButton(title: "Edit preferences", color: .systemOrange, action: #selector(editPreferencesTapped)))
-        buttonStackView.addArrangedSubview(createNavButton(title: "Start over", color: .systemRed, action: #selector(startOverTapped)))
-        buttonStackView.addArrangedSubview(createNavButton(title: "Confirm", color: .systemGreen, action: #selector(confirmTapped)))
-
-        view.addSubview(summaryStackView)
-        view.addSubview(buttonStackView)
-
+        view.addSubview(confirmButton)
+        view.addSubview(startOverButton)
+        view.addSubview(editPreferencesButton)
+        view.addSubview(editPersonalInfoButton)
+        
+        let horizontalPadding: CGFloat = 30
+        let verticalSpacing: CGFloat = 12
+        
         NSLayoutConstraint.activate([
-            summaryStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40),
-            summaryStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
-            summaryStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+            nameLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40),
+            nameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: horizontalPadding),
+            nameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -horizontalPadding),
 
-            buttonStackView.topAnchor.constraint(greaterThanOrEqualTo: summaryStackView.bottomAnchor, constant: 40),
-            buttonStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -30),
-            buttonStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            buttonStackView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.85),
-            buttonStackView.heightAnchor.constraint(equalToConstant: 230) // 4 * 50 (button height) + 3 * 10 (spacing)
+            phoneLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: verticalSpacing),
+            phoneLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
+            phoneLabel.trailingAnchor.constraint(equalTo: nameLabel.trailingAnchor),
+            
+            preferenceLabel.topAnchor.constraint(equalTo: phoneLabel.bottomAnchor, constant: verticalSpacing),
+            preferenceLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
+            preferenceLabel.trailingAnchor.constraint(equalTo: nameLabel.trailingAnchor),
+        ])
+ 
+        let buttonHeight: CGFloat = 50
+        let buttonSpacing: CGFloat = 15
+        
+        NSLayoutConstraint.activate([
+            confirmButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -30),
+            confirmButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            confirmButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.85),
+            confirmButton.heightAnchor.constraint(equalToConstant: buttonHeight),
+            
+            startOverButton.bottomAnchor.constraint(equalTo: confirmButton.topAnchor, constant: -buttonSpacing),
+            startOverButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            startOverButton.widthAnchor.constraint(equalTo: confirmButton.widthAnchor),
+            startOverButton.heightAnchor.constraint(equalTo: confirmButton.heightAnchor),
+            
+            editPreferencesButton.bottomAnchor.constraint(equalTo: startOverButton.topAnchor, constant: -buttonSpacing),
+            editPreferencesButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            editPreferencesButton.widthAnchor.constraint(equalTo: confirmButton.widthAnchor),
+            editPreferencesButton.heightAnchor.constraint(equalTo: confirmButton.heightAnchor),
+            
+            editPersonalInfoButton.bottomAnchor.constraint(equalTo: editPreferencesButton.topAnchor, constant: -buttonSpacing),
+            editPersonalInfoButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            editPersonalInfoButton.widthAnchor.constraint(equalTo: confirmButton.widthAnchor),
+            editPersonalInfoButton.heightAnchor.constraint(equalTo: confirmButton.heightAnchor),
+            
+            editPersonalInfoButton.topAnchor.constraint(greaterThanOrEqualTo: preferenceLabel.bottomAnchor, constant: 40)
         ])
     }
-
+    
     @objc private func startOverTapped() {
         navigationController?.popToRootViewController(animated: true)
     }
