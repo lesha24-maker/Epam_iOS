@@ -8,18 +8,18 @@
 
 ### Modules & Timeline:
 
-*   **Course Basics** (8hr)
-*   **Swift language** (20hr)
-    *   Swift Part 1 (5hr)
-    *   Swift Part 2 (5hr)
-    *   Swift Part 3 (5hr) - _Current Focus_
-    *   Swift Part 4 (5hr)
+*   **Course Basics** 
+*   **Swift language** 
+    *   Swift Part 1 
+    *   Swift Part 2 
+    *   Swift Part 3 
+    *   Swift Part 4 
 *   Quizz 1
-*   **UIKit** (36hr)
+*   **UIKit** 
 *   Quizz 2
-*   **Foundation** (40hr)
+*   **Foundation** 
 *   Quizz 3
-*   **SwiftUI** (34hr)
+*   **SwiftUI** 
 *   Quizz 4
-*   **Last Mile** (42hr)
+*   **Last Mile** 
 *   Final Interview/Task acceptance
