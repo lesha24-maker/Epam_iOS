@@ -1,0 +1,15 @@
+{
+  "screenTitle": "Dynamic Configuration",
+  "displayImageBorder": true,
+  "borderColorHex": "#007AFF",
+  "imagesToShow": [
+    {
+      "name": "promoBanner",
+      "caption": "Special promotion available now!"
+    },
+    {
+      "name": "avatarPlaceholder",
+      "caption": "Default user avatar."
+    }
+  ]
+}
