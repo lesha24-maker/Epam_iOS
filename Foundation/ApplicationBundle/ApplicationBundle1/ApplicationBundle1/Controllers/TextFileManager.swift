@@ -1,11 +1,16 @@
-import UIKit
+//
+//  TextFileManager.swift
+//  ApplicationBundle1
+//
+//  Created by Alexey Lim on 22/7/25.
+//
+
+import Foundation
 
 class TextFileManager {
     
-    func getDocumentsDirectory() -> URL? {
-        
-        let fileManager = FileManager.default
-        return fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
+    private func getDocumentsDirectory() -> URL? {
+        return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
     }
     
     func saveText(_ text: String, to fileName: String) {
@@ -23,8 +28,7 @@ class TextFileManager {
             attributes[.protectionKey] = FileProtectionType.complete
             try FileManager.default.setAttributes(attributes, ofItemAtPath: fileURL.path)
             
-            print("File saved successfully!")
-            print("   -> at path: \(fileURL.path)")
+            print("File saved/updated successfully at: \(fileURL.path)")
             
         } catch {
             print("Error saving file: \(error.localizedDescription)")
@@ -39,6 +43,11 @@ class TextFileManager {
         
         let fileURL = documentsDirectory.appendingPathComponent(fileName)
         
+        guard FileManager.default.fileExists(atPath: fileURL.path) else {
+            print("Info: File '\(fileName)' does not exist yet.")
+            return nil
+        }
+        
         do {
             let savedText = try String(contentsOf: fileURL, encoding: .utf8)
             return savedText
@@ -48,25 +57,3 @@ class TextFileManager {
         }
     }
 }
-
-print("--- Starting File Management Test ---\n")
-
-let manager = TextFileManager()
-
-let mySecretMessage = "This demonstrates saving data securely within an app's sandbox. Only the app can access this."
-let myFileName = "TeacherNote.txt"
-
-print("STEP 1: Attempting to save text...")
-manager.saveText(mySecretMessage, to: myFileName)
-
-print("\n--------------------------------------\n")
-
-print("STEP 2: Attempting to retrieve text...")
-if let retrievedMessage = manager.retrieveText(from: myFileName) {
-    print("Success! Retrieved Message:")
-    print("   \"\(retrievedMessage)\"")
-} else {
-    print("Failed to retrieve message.")
-}
-
-print("\n--- Test Complete ---")
