@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		18442DE92E2A5564007B5816 /* ApplicationBundle2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = ApplicationBundle2.app; path = "/Users/d1onnisss/Desktop/Epam_iOS/Foundation/ApplicationBundle/ApplicationBundle2/build/Debug-iphoneos/ApplicationBundle2.app"; sourceTree = "<absolute>"; };
+		18A042772E2F8818002BD6A9 /* ApplicationBundle2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ApplicationBundle2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -46,6 +46,7 @@
 			isa = PBXGroup;
 			children = (
 				18442DEB2E2A5564007B5816 /* ApplicationBundle2 */,
+				18A042772E2F8818002BD6A9 /* ApplicationBundle2.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -71,7 +72,7 @@
 			packageProductDependencies = (
 			);
 			productName = ApplicationBundle2;
-			productReference = 18442DE92E2A5564007B5816 /* ApplicationBundle2.app */;
+			productReference = 18A042772E2F8818002BD6A9 /* ApplicationBundle2.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
