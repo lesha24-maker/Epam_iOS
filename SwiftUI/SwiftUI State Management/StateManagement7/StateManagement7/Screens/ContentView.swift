@@ -7,14 +7,61 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct CounterDisplayViewA: View {
+    @Environment(SharedCounter.self) private var counter
+    
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            Text("View A")
+                .font(.headline)
+            Text("Count: \(counter.count)")
+                .font(.largeTitle.bold())
+                .contentTransition(.numericText())
+            
+            Button("Increment from View A") {
+                withAnimation {
+                    counter.count += 1
+                }
+            }
         }
+    }
+}
+
+struct CounterDisplayViewB: View {
+    @Environment(SharedCounter.self) private var counter
+    
+    var body: some View {
+        VStack {
+            Text("View B")
+                .font(.headline)
+            Text("Count: \(counter.count)")
+                .font(.largeTitle.bold())
+                .contentTransition(.numericText())
+            
+            Button("Increment from View B") {
+                withAnimation {
+                    counter.count += 1
+                }
+            }
+        }
+    }
+}
+
+struct ContentView: View {
+    @State private var sharedCounter = SharedCounter()
+    
+    var body: some View {
+        VStack(spacing: 50) {
+            Text("Shared Counter Demo")
+                .font(.title.weight(.heavy))
+            
+            CounterDisplayViewA()
+            
+            Divider()
+            
+            CounterDisplayViewB()
+        }
+        .environment(sharedCounter)
         .padding()
     }
 }

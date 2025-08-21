@@ -6,3 +6,9 @@
 //
 
 import Foundation
+import Observation
+
+@Observable
+class SharedCounter {
+    var count: Int = 0
+}
